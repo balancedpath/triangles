@@ -18,3 +18,7 @@ html, body {
     display: inline-block;
 }
 
+polygon {
+    opacity: 0.5;
+}
+
