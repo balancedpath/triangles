@@ -96,27 +96,36 @@ const tick = () => {
         const triangle = triangles[i];
 
         // split numbers from direction dataset in html
-        xdirSet = triangle.dataset.xdir.split(" ").map(Math.round) // [1, 1, 1]
-        console.log(xdirSet);
-        
+        xdirSet = triangle.dataset.xdir.split(" ").map(Number) // [1, 1, 1]
+        ydirSet = triangle.dataset.ydir.split(" ").map(Number) // [1, 1, 1]
 
         // loop through triangles and give them a new position?
         for (let j = 0; j < triangle.points.length; j++) {
             const point = triangle.points[j];
+            
             const xdir = xdirSet[j]
-
-            // if direction is positive and beyond width OR
-            // if direction is negative and below 0
-            // reverse direction
             if (
-                (xdir === 1 && point.x > drawBoxSize.width) ||
-                (xdir === -1 && point.x < 0)
+                // if direction is positive and beyond width OR
+                (xdir > 0 && point.x > drawBoxSize.width) ||
+                // if direction is negative and below 0
+                (xdir < 0 && point.x < 0)
             ) {
+                // reverse direction
                 xdirSet[j] = (xdir * -1)
+                // write to DOM
                 triangle.dataset.xdir = xdirSet.join(" ")
             }
-
             point.x += xdir
+
+            const ydir = ydirSet[j]
+            if (
+                (ydir > 0 && point.y > drawBoxSize.height) ||
+                (ydir < 0 && point.y < 0)
+            ) {
+                ydirSet[j] = (ydir * -1)
+                triangle.dataset.ydir = ydirSet.join(" ")
+            }
+            point.y += ydir
         }
         
     }
