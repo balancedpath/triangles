@@ -89,25 +89,34 @@ const tick = () => {
     // update all wanted variables
     // like position, color, etc.
 
+    drawBoxSize = document.getElementById('drawBox').getBoundingClientRect()
     triangles = document.getElementsByClassName('triangle')
     
     for (let i = 0; i < triangles.length; i++) {
         const triangle = triangles[i];
-        // loop through triangles and give them a new position?
-        console.log(triangle.points[0].x); // number
-        
-        triangle.points[0].x += 1
 
+        // split numbers from direction dataset in html
+        xdirSet = triangle.dataset.xdir.split(" ").map(Math.round) // [1, 1, 1]
+        console.log(xdirSet);
+        
+
+        // loop through triangles and give them a new position?
         for (let j = 0; j < triangle.points.length; j++) {
             const point = triangle.points[j];
-            if (false) {
-                
+            const xdir = xdirSet[j]
+
+            // if direction is positive and beyond width OR
+            // if direction is negative and below 0
+            // reverse direction
+            if (
+                (xdir === 1 && point.x > drawBoxSize.width) ||
+                (xdir === -1 && point.x < 0)
+            ) {
+                xdirSet[j] = (xdir * -1)
+                triangle.dataset.xdir = xdirSet.join(" ")
             }
 
-            console.log(triangle.data-x-dir);
-            
-            point.x += 1
-            point.y += 2
+            point.x += xdir
         }
         
     }
@@ -118,8 +127,8 @@ const tick = () => {
 const main = () => {
     // setup()
 
-    tick()
-    // tickInterval = setInterval(tick, 100);
+    // tick()
+    tickInterval = setInterval(tick, 10);
 }
 
 window.onload = main
