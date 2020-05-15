@@ -97,7 +97,7 @@ const tick = () => {
 
 const main = () => {
     setup()
-    tickInterval = setInterval(tick, 20);
+    tickInterval = setInterval(tick, 30);
 }
 
 window.onload = main
