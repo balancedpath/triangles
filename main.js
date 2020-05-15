@@ -1,93 +1,58 @@
-const getRandomHslColor  = () => {
+const getRandomHslColor  = (hueRangeStart, hueRangeEnd) => {
     // random number between 0 and 
-    hue = Math.floor((Math.random() * 360));
+    hue = Math.floor((Math.random() * (hueRangeEnd - hueRangeStart) + hueRangeStart));
     sat = 100
     light = 50
     return `hsl(${hue}, ${sat}%, ${light}%)`
 }
 
-/**
- * Sets a gradient in the html body
- * @param {string} startColor 
- * @param {string} stopColor 
- * @param {string} id 
- */
-const createGradient = (startColor, stopColor, id) => {
-    
-    // create startColor
-    stop0 = document.createElement('stop')
-    stop0.offset = 0
-    stop0.stopColor = startColor
-    
-    // create stopColor
-    stop1 = document.createElement('stop')
-    stop1.offset = 1
-    stop1.stopColor = stopColor
-    
-    linearGradient = document.createElement('linearGradient')
-    linearGradient.id = id
-    linearGradient.appendChild(stop0)
-    linearGradient.appendChild(stop1)
+const randomizeGrad = (gradId, hueRangeStart, hueRangeEnd) => {
+    grad = document.getElementById(gradId)
 
-    console.log(stop0, stop1);
-    
-
-    document.getElementById('gradientDefs').appendChild(linearGradient)
+    grad.children[0].style.stopColor = getRandomHslColor(hueRangeStart, hueRangeEnd)
+    grad.children[1].style.stopColor = getRandomHslColor(hueRangeStart, hueRangeEnd)
 }
 
-/**
- * 
- * @param {array} points comma coordinates seperated by space: [[1,1],[2,2],[3,3]]
- * @param {string} fill url(#gradientID)
- * @param {string} stroke TODO
- * @param {number} strokeWidth pixels
- */
 const getPolygon = (points, fillGradId, stroke, strokeWidth) => {
     svg = document.getElementById('drawBox')
-    // NS = svg.getAttribute('xmlns');
-    polygon = document.createElement('polygon');
+    // polygon = document.createElement('polygon');
+    // polygon = document.createElementNS('http://www.w3.org/2000/svg','polygon');
 
-    /**
-     * CREATE AN SVG POINTLIST SOMEHOW
-     */
+    // finally some official docs
+    // https://dev.w3.org/SVG/profiles/1.1F2/publish/coords.html#InterfaceSVGPointList
+
+    // pointList = [];
 
     // for (var i = 0; i < points.length; i++) {
     //     svgPoint = svg.createSVGPoint()
     //     svgPoint.x = points[i][0]
     //     svgPoint.y = points[i][1]
     //     console.log(svgPoint);
-    //     polygon.points.push(svgPoint)
-    //     // svgpointlist.appendItem(svgPoint)
+    //     pointList.push(svgPoint)
     // }
 
-    console.log(stroke);
+    // console.log(stroke);
     
 
-    polygon.points = points
-    // polygon.setAttribute('points', points)
-    polygon.style.fill = 'green'
-    // polygon.style.fill = `url(#${fillGradId})`
-    polygon.style.stroke = stroke
-    polygon.style.strokeWidth = strokeWidth
+    polygon = new Polygon(0,0, 100,100, 300,300)
 
-    return polygon
+
+
+
+    // polygon.points = points
+    // polygon.setAttribute('points', points)
+
+    // document.getElementById('drawBox').appendChild(pol)
 }
 
 const setup = () => {
-    // create a gradient
-    createGradient(getRandomHslColor(), getRandomHslColor(), 'testTriangle')
-
-    // draw polygon
-    pol = getPolygon('200,0 100,200 300,200', 'testTriangle', 'black', 4)
-    // pol = getPolygon([[200,0], [100,200], [300,200]], 'testTriangle', 'black', 4)
-    console.log(pol);
-    
-    document.getElementById('drawBox').appendChild(pol)
+    // randomize the existing gradients
+    randomizeGrad('grad1', 0, 110)
+    randomizeGrad('grad2', 120, 230)
+    randomizeGrad('grad3', 240, 350)
 }
 
 const tick = () => {
-    // update all wanted variables
-    // like position, color, etc.
 
     drawBoxSize = document.getElementById('drawBox').getBoundingClientRect()
     triangles = document.getElementsByClassName('triangle')
@@ -127,16 +92,11 @@ const tick = () => {
             }
             point.y += ydir
         }
-        
     }
-
-    // can use transform:translate with non-scaling-stroke
 }
 
 const main = () => {
-    // setup()
-
-    // tick()
+    setup()
     tickInterval = setInterval(tick, 20);
 }
 
