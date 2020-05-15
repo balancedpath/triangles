@@ -13,38 +13,6 @@ const randomizeGrad = (gradId, hueRangeStart, hueRangeEnd) => {
     grad.children[1].style.stopColor = getRandomHslColor(hueRangeStart, hueRangeEnd)
 }
 
-const getPolygon = (points, fillGradId, stroke, strokeWidth) => {
-    svg = document.getElementById('drawBox')
-    // polygon = document.createElement('polygon');
-    // polygon = document.createElementNS('http://www.w3.org/2000/svg','polygon');
-
-    // finally some official docs
-    // https://dev.w3.org/SVG/profiles/1.1F2/publish/coords.html#InterfaceSVGPointList
-
-    // pointList = [];
-
-    // for (var i = 0; i < points.length; i++) {
-    //     svgPoint = svg.createSVGPoint()
-    //     svgPoint.x = points[i][0]
-    //     svgPoint.y = points[i][1]
-    //     console.log(svgPoint);
-    //     pointList.push(svgPoint)
-    // }
-
-    // console.log(stroke);
-    
-
-    polygon = new Polygon(0,0, 100,100, 300,300)
-
-
-
-
-    // polygon.points = points
-    // polygon.setAttribute('points', points)
-
-    // document.getElementById('drawBox').appendChild(pol)
-}
-
 const setup = () => {
     // randomize the existing gradients
     randomizeGrad('grad1', 0, 110)

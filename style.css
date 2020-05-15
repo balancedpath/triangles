@@ -7,6 +7,21 @@ html, body {
     overflow: hidden;
 }
 
+stop {
+    transition: all 0.3s;
+}
+
+.blink {
+    animation-name: blink;
+    animation-duration: 0.3s;
+}
+
+@keyframes blink {
+  0%   {stroke: white;}
+  50%  {stroke: black;}
+  100% {stroke: white;}
+}
+
 polygon {
     opacity: 0.5;
     stroke: white;
