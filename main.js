@@ -91,6 +91,8 @@ const tick = () => {
                 xdirSet[j] = (xdir * -1)
                 // write to DOM
                 triangle.dataset.xdir = xdirSet.join(" ")
+                triangle.dispatchEvent(new Event('click'));
+                
             }
             point.x += xdir
 
@@ -101,6 +103,7 @@ const tick = () => {
             ) {
                 ydirSet[j] = (ydir * -1)
                 triangle.dataset.ydir = ydirSet.join(" ")
+                triangle.dispatchEvent(new Event('click'));
             }
             point.y += ydir
         }
