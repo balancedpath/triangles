@@ -50,6 +50,18 @@ const setup = () => {
     randomizeGrad('grad1', 0, 110)
     randomizeGrad('grad2', 120, 230)
     randomizeGrad('grad3', 240, 350)
+
+    document.getElementById('preMadeTriangle1').addEventListener('click', () => {
+        randomizeGrad('grad1', 0, 110)
+    })
+    document.getElementById('preMadeTriangle2').addEventListener('click', () => {
+        randomizeGrad('grad2', 120, 230)
+    })
+    document.getElementById('preMadeTriangle3').addEventListener('click', () => {
+        randomizeGrad('grad3', 240, 350)
+    })
+
+    alert("Tap a triagle to change it's color!")
 }
 
 const tick = () => {
